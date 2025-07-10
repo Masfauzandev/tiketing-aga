@@ -78,13 +78,14 @@
                                             </div>
                                         </div>
                                     </div> -->
-                                    <div class="form-group row">
-                                        <label for="cc_dd" class="col-sm-2 form-control-label">CC</label>
-                                        <div class="col-sm-6">
-                                            <select name="cc_dd[]" id="cc_dd" class="form-control select2" style="width: 100%" disabled>
-                                                <option value="<?= $cc_users[0]['username'] ?>" selected><?= $cc_users[0]['name'] ?></option>
-                                            </select>
-                                            <input type="hidden" name="cc_dd[]" value="<?= $cc_users[0]['username'] ?>">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-2 form-control-label">CC</label>
+                                            <div class="col-sm-6 select">
+                                                <select name="cc[]" id="cc_dd" multiple="multiple">
+                                                    <option value="null">Select names</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -159,7 +160,6 @@
 
         $('#subject').select2();
         $('#assign_to').select2();
-        $('#cc_dd').select2();  
 
         var attached_files = [];
 
@@ -205,7 +205,6 @@
             var subject = $("#subject").val();
             var message = quill.root.innerHTML
             var cc = ($("#cc_dd").val()).join(';');
-            // var severity = parseInt($("#cc_dd").val());
             var severity = parseInt($("#severity_dd").val());
             var category = parseInt($("#category_dd").val());
             var assign_to = $("#assign_to").val();
