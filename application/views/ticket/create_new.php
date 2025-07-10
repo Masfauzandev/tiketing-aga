@@ -15,27 +15,26 @@
                                         <div class="row">
                                             <label class="col-sm-2 form-control-label">Subject</label>
                                             <div class="col-sm-6 select">
-                                                <select name="subject" id="subject" class="form-control select" style="width: 100%">
-                                                    <!-- <option value="">Subject</option> -->
-                                                     <option value="">Select Subject</option>
+                                                <select name="subject" id="subject" class="form-control select2" style="width: 100%">
+                                                    <option value="">Select Subject</option>
                                                     <?php foreach ($subjects as $s): ?>
                                                         <option value="<?= $s ?>"><?= $s ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
-                                            </div>
+                                           </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="category_dd" class="col-sm-2 form-control-label">Category</label>
-                                        <div class="col-sm-6">
-                                            <select name="category_dd" id="category_dd" class="form-control">
-                                                <option value="">Select Category</option>
-                                                    <?php foreach ($categories as $cat): ?>
-                                                        <option value="<?= $cat['id'] ?>"><?= $cat['name'] ?></option>
-                                                    <?php endforeach; ?>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-2 form-control-label">Category</label>
+                                            <div class="col-sm-6 select">
+                                                <select name="category" id="category_dd" class="form-control"
+                                                        style="width: 100%">
+                                                    <option value="null">Select category</option>
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
                                     <!-- <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-2 form-control-label">Assign to</label>
@@ -60,12 +59,12 @@
                                     <div class="form-group row">
                                         <label for="assign_to" class="col-sm-2 form-control-label">Technical</label>
                                         <div class="col-sm-6">
-                                            <select name="assign_to" id="assign_to" class="form-control">
-                                                <option value="">Select Technical</option>
+                                            <select name="assign_to" id="assign_to" class="form-control select2" style="width: 100%" disabled>
                                                 <?php foreach ($users as $user): ?>
-                                                    <option value="<?= $user['username'] ?>"><?= $user['name'] ?></option>
+                                                    <option value="<?= $user['username'] ?>" selected><?= $user['name'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
+                                            <input type="hidden" name="assign_to" value="<?= $users[0]['username'] ?>">
                                         </div>
                                     </div>
 
@@ -79,14 +78,13 @@
                                             </div>
                                         </div>
                                     </div> -->
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="col-sm-2 form-control-label">CC</label>
-                                            <div class="col-sm-6">
-                                                <select name="cc[]" id="cc_dd" class="form-control" multiple="multiple" style="width: 100%">
-                                                    <option value="null">Select names</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group row">
+                                        <label for="cc_dd" class="col-sm-2 form-control-label">CC</label>
+                                        <div class="col-sm-6">
+                                            <select name="cc_dd[]" id="cc_dd" class="form-control select2" style="width: 100%" disabled>
+                                                <option value="<?= $cc_users[0]['username'] ?>" selected><?= $cc_users[0]['name'] ?></option>
+                                            </select>
+                                            <input type="hidden" name="cc_dd[]" value="<?= $cc_users[0]['username'] ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -159,45 +157,9 @@
 <script>
     $(document).ready(function () {
 
-       // Subject
-    $('#subject').select2({
-        placeholder: 'Select subject',
-        width: '100%',
-        minimumResultsForSearch: Infinity
-    });
-
-    // Assign To
-    $('#assign_to').select2({
-        placeholder: 'Select Technical',
-        width: '100%',
-        minimumResultsForSearch: Infinity
-    });
-
-    if ($.fn.select2) {
-        if ($('#category_dd').hasClass('select2-hidden-accessible')) {
-            $('#category_dd').select2('destroy');
-        }
-
-        $('#category_dd').select2({
-            placeholder: 'Select category',
-            width: '100%',
-            minimumResultsForSearch: Infinity
-        });
-    }
-
-    // Severity
-    $('#severity_dd').select2({
-        placeholder: 'Select severity',
-        width: '100%',
-        minimumResultsForSearch: Infinity
-    });
-
-    // CC (Multi-select with search)
-    $('#cc_dd').select2({
-        placeholder: 'Select names',
-        width: '100%'
-        // Search box aktif (default)
-    });
+        $('#subject').select2();
+        $('#assign_to').select2();
+        $('#cc_dd').select2();  
 
         var attached_files = [];
 
@@ -243,6 +205,7 @@
             var subject = $("#subject").val();
             var message = quill.root.innerHTML
             var cc = ($("#cc_dd").val()).join(';');
+            // var severity = parseInt($("#cc_dd").val());
             var severity = parseInt($("#severity_dd").val());
             var category = parseInt($("#category_dd").val());
             var assign_to = $("#assign_to").val();

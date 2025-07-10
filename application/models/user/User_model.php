@@ -233,10 +233,23 @@ class User_model extends BaseMySQL_model
 
 	}
 
-	public function getAllUsers()
+	// public function getAllUsers()
+	// {
+    // return $this->db->get(TABLE_USER)->result_array();
+	// }
+
+	public function get_by_username($username)
 	{
-    return $this->db->get(TABLE_USER)->result_array();
+    return $this->db->get_where('users', ['name' => 'IT'])->result_array();
 	}
+
+	public function get_by_name($name)
+	{
+    return $this->db->get_where('users', ['name' => $name])->result_array();
+	}
+
+
+
 
 
 }

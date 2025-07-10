@@ -14,13 +14,19 @@ class Tickets extends MY_Controller
 
     public function create_new()
     {
-        $data['title'] = 'New Ticket';
-        $this->load->model('user/User_model', 'Users');
-        $data['users'] = $this->Users->getAllUsers();
-        $this->load->model('ticket/Ticket_model', 'Ticket_model');
-        $data['subjects'] = $this->Ticket_model->get_subject_options();
-        $this->render('New Ticket', 'ticket/create_new', $data);
+    $data['title'] = 'New Ticket';
+    $this->load->model('user/User_model', 'Users');
+    $data['users'] = $this->Users->get_by_username('IT');
+
+    $this->load->model('ticket/Ticket_model', 'Ticket_model');
+    $data['subjects'] = $this->Ticket_model->get_subject_options();
+
+    $data['cc_users'] = $this->Users->get_by_name('Management');
+
+    $this->render('New Ticket', 'ticket/create_new', $data);
+
     }
+
 
     public function list_all()
     {
